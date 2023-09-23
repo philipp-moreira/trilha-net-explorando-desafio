@@ -3,14 +3,11 @@ using DesafioProjetoHospedagem.Models;
 
 Console.OutputEncoding = Encoding.UTF8;
 
+Console.WriteLine("Informe a quantidade de hospedes:");
+_ = uint.TryParse(Console.ReadLine(), out uint quantidadeHospedesInformada);
+
 // Cria os modelos de hóspedes e cadastra na lista de hóspedes
-List<Pessoa> hospedes = new List<Pessoa>();
-
-Pessoa p1 = new Pessoa(nome: "Hóspede 1");
-Pessoa p2 = new Pessoa(nome: "Hóspede 2");
-
-hospedes.Add(p1);
-hospedes.Add(p2);
+List<Pessoa> hospedes = CriarHospedesDinamicamente(quantidadeHospedesInformada).ToList();
 
 // Cria a suíte
 Suite suite = new Suite(tipoSuite: "Premium", capacidade: 2, valorDiaria: 30);
@@ -23,3 +20,17 @@ reserva.CadastrarHospedes(hospedes);
 // Exibe a quantidade de hóspedes e o valor da diária
 Console.WriteLine($"Hóspedes: {reserva.ObterQuantidadeHospedes()}");
 Console.WriteLine($"Valor diária: {reserva.CalcularValorDiaria()}");
+
+
+static IEnumerable<Pessoa>  CriarHospedesDinamicamente(uint quantidadeHospedes)
+{
+    var lista = new List<Pessoa>();
+    Pessoa pessoa;
+    for(var i = 0 ; i < quantidadeHospedes ; i++)
+    {
+        pessoa = new Pessoa(nome: $"Hóspede {(i+1)}");
+        lista.Add(pessoa);
+    }
+
+    return lista;
+}
